@@ -1,0 +1,18 @@
+* {
+  font-family: "Roboto Mono", monospace;
+}
+
+button {
+  cursor: pointer;
+}
+
+#product-list {
+  display: flex;
+}
+
+.header-content nav a{
+  font-size: 30px;
+  margin: 0 10px 0 0;
+  text-decoration: none;
+  color: white;
+}
