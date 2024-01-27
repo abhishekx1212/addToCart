@@ -1,68 +1,63 @@
-const products = [];
-
-var student = [
+const products = [
     {
         id: 1,
-        image: 'assets/images/p1.jpg',
         name: 'APPLE',
-        price: '$9000',
+        price: 20.99,
+        image: 'assets/images/p1.jpg'
     },
     {
         id: 2,
-        image: 'assets/images/p2.jpg',
         name: 'SAMSUNG',
-        price: '$1000',
+        price: 30.49,
+        image: 'assets/images/p2.jpg'
     },
     {
         id: 3,
-        image: 'assets/images/p3.jpeg',
         name: 'VIVO',
-        price: '$5000',
-    },
-
+        price: 50.89,
+        image: 'assets/images/p3.jpeg'
+    }
 ];
 
-for (var i = 0; i < student.length; i++) {
-    document.getElementById('row').innerHTML += `
-    <div class="col-xl-4 col-md-6">
-        <div class="card">
-            <div class="card-content">
-            <img src=${student[i].image} width="100%" alt="">
-            <h2>${student[i].name}</h2>
-            <span class="fs-4 text-success">${student[i].price}</span>
-            <button onclick=add(${i}) class="btn btn-primary">ADD TO CART</button>
+const productListContainer = document.getElementById('row');
+products.forEach((product) => {
+    const productDiv = document.createElement('div');
+    productDiv.className = 'col-4';
+    productDiv.innerHTML = `
+            <div class="card px-3">
+                <img src="${product.image}" alt="${product.name}" width="100%">
+                <h3 class="text-uppercase fw-bold fs-4 mt-1">${product.name}</h3>
+                <p class="text-uppercase fw-bold fs-5 text-primary">Price: $${product.price.toFixed(2)}</p>
+                <button class="btn bg-success mb-2 text-white" onclick="addToCart(${product.id})">ADD TO CART</button>
             </div>
-        </div>
-    </div>
 `;
-}
+    productListContainer.appendChild(productDiv);
+});
 
-var Qt = 0;
-const add = (i) => {
+function addToCart(productId) {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const selectedProduct = products.find((product) => {
+        return product.id === productId
+    });
 
+    const cartItem = {
+        id: selectedProduct.id,
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        quantity: 1
+    };
 
-    Qt++;
-    var id = student[i].id;
-    var img = student[i].image;
-    var name = student[i].name;
-    var price = student[i].price;
+    const existingItemIndex = cartItems.findIndex((item) => {
+        return item.id === cartItem.id
+    });
 
-    let updateObj = { id, img, name, price, Qt };
-    products.push(updateObj);
-    saveToLocalStorage();
-}
-
-
-function saveToLocalStorage() {
-    localStorage.setItem('products', JSON.stringify(products));
-}
-
-function loadFromLocalStorage() {
-    const storedRecords = localStorage.getItem('products');
-    if (storedRecords) {
-        products = JSON.parse(storedRecords);
-        // updateTable();
+    if (existingItemIndex !== -1) {
+        cartItems[existingItemIndex].quantity += 1;
+    } else {
+        cartItems.push(cartItem);
     }
+
+    // localStorage.setItem('cart', JSON.stringify(cartItems));
 }
 
-console.log(products)
+
