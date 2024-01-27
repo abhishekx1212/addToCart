@@ -12,7 +12,33 @@ button {
   display: flex;
 }
 
-.header-content nav a{
+.header-content nav a {
+  font-size: 30px;
+  margin: 0 10px 0 0;
+  text-decoration: none;
+  color: white;
+}
+
+
+.card {
+  background-color: rgba(255, 225, 225, 0.4);
+  padding: 15px;
+  margin-bottom: 15px;
+  display: inline-block;
+  width: 100%;
+  color: black;
+  border: 1px solid white;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.card-content button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.header-content nav a {
   font-size: 30px;
   margin: 0 10px 0 0;
   text-decoration: none;
